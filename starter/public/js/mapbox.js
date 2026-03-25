@@ -1,5 +1,5 @@
 export const displayMap = (locations) => {
-  mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+  mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
   const map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/dirash254/cmmp7j6t200a701s70425hy5v',

@@ -71,7 +71,7 @@ block content
         Tour ${i + 1}`, class=`picture-box__img--${i + 1}`)
 
   section.section-map
-    #map(data-location=JSON.stringify(tour.locations))
+    #map(data-location=JSON.stringify(tour.locations) data-mapbox-token=mapboxToken)
 
   section.section-reviews
     .reviews
