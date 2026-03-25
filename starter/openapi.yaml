@@ -1,0 +1,528 @@
+openapi: 3.0.0
+info:
+  title: Natours
+  description: >-
+    The Natours API contains endpoints for:
+
+
+    - Tours
+        
+    - Users and
+        
+    - Reviews
+        
+    - There is also Authentication, which is jwt based. A user can also reset
+    password when forgoten.
+  version: 1.0.0
+servers:
+  - url: undefined://{{URL}}api
+tags:
+  - name: Tours
+    description: |-
+      **In this folder, you can:**
+
+      - Get tours
+          
+      - Create tours
+          
+      - Update and Delete Tours
+          
+      - There are also special endpoints for special requirements.
+  - name: Users
+    description: |-
+      This folder contains endpoints for:
+
+      - Getting all users
+          
+      - Getting Current User
+          
+      - Updating User
+          
+      - Updating Current User
+          
+      - Deleting Current User
+          
+      - Deleting Me simply by setting active field to false.
+  - name: Authentication
+    description: |-
+      This folder contains endpoints for :
+
+      - signing up
+          
+      - login
+          
+      - forgot password to generate a reset token
+          
+      - reset password using the gnerated token
+          
+      - Updating password
+  - name: Reviews
+    description: |-
+      This folder contains endpoints for:
+
+      - Getting all reviews
+          
+      - Get a review
+          
+      - Creating a review
+          
+      - Deleting a review
+          
+      - Updating a review
+  - name: Tour/review
+    description: >-
+      This folder contains endpoints for creating new review on a tour. Its
+      nested to tours router.
+paths:
+  /v1/tours:
+    get:
+      tags:
+        - Tours
+      summary: Get All Tours
+      description: Use this API endpoint to get all tours
+      parameters:
+        - name: duration[gte]
+          in: query
+          schema:
+            type: integer
+          description: Query for tour duration, supports gte, lte, gt, lt operators.
+          example: '7'
+        - name: sort
+          in: query
+          schema:
+            type: string
+          example: price
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Tours
+      summary: Create  Tour
+      description: >-
+        Use this endpoint to create a tour, protected and restricted to admin
+        and lead-guide.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: The Testing Tour
+                duration: 7
+                difficulty: easy
+                price: 1000
+                maxGroupSize: 8
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/69ae9fa21ee59c958a4c1a6c:
+    get:
+      tags:
+        - Tours
+      summary: Get a Tour
+      description: Use this endpoint to query for one tour, using tour id.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/69a574a131e1ba7e6702046d:
+    delete:
+      tags:
+        - Tours
+      summary: Delete Tour
+      description: |-
+        Use this endpoint to delete a tour, using tourId.
+
+        The endpoint is protected and restricted to admin and lead-guides.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/top-5-cheap:
+    get:
+      tags:
+        - Tours
+      summary: Get top-5-cheap tours
+      description: Use this endpoint to get top-five cheap tours
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/tour-stats:
+    get:
+      tags:
+        - Tours
+      summary: Get Tour stats
+      description: >-
+        Use this endpoint to get tour statistics based on difficulty ( easy,
+        medium, difficult).
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/monthly-plan/2021:
+    get:
+      tags:
+        - Tours
+      summary: Get monthly plan
+      description: |-
+        Use this endpoint to get monthly plan,
+
+        It is protected and restricted to admin, lead-guides and guides.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/69817994a4f0ae05ba544a63:
+    patch:
+      tags:
+        - Tours
+      summary: Updating Tour
+      description: |-
+        Use this endpoint to update a tour.
+
+        Protected and restricted to admin and lead-guide
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                ratingsAverage: '10'
+                difficulty: whatever
+                name: Short
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/tours-within/400/center/34.11659, -118.1114/unit/mi:
+    get:
+      tags:
+        - Tours
+      summary: Get Tours Within a Radius
+      description: >-
+        Use this endpoint to get tours within a radius which is calculated using
+        the distance , latitudes and longitudes from the url params.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/distances/34.11659, -118.1114/unit/mi:
+    get:
+      tags:
+        - Tours
+      summary: Get Distance of Tours from a Point
+      description: >-
+        Use this endpoint to get the distance of tours from a certain point, by
+        providing the latitudes and longitudes of that point.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/updateMe:
+    patch:
+      tags:
+        - Users
+      summary: Update User
+      description: User may use this endpoint to update him/herself
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Cornel
+                role: admin
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/deleteMe:
+    delete:
+      tags:
+        - Users
+      summary: Delete Me
+      description: A user can use this endpoint to delete him/herself
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users:
+    get:
+      tags:
+        - Users
+      summary: Get users
+      description: Use this endpoint to get all users
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/69a7f1ccf6e74603e0d0cebd:
+    delete:
+      tags:
+        - Users
+      summary: Delete Current User
+      description: >-
+        Use this endpoint to delete current user, it is protected and restricted
+        to admin
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/69ae57d251df465c608486bf:
+    patch:
+      tags:
+        - Users
+      summary: Update Current User
+      description: Use this endpoint to update current user, restricted to admin only.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Cornelius
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/me:
+    get:
+      tags:
+        - Users
+      summary: Get Current User
+      description: A user may use this endpoint to get his or her details.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/signup:
+    post:
+      tags:
+        - Authentication
+      summary: signup
+      description: Use this endpoint to signup users.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: ndirangu
+                email: dirangucornelius@gmail.com
+                password: password1
+                passwordConfirm: password1
+                role: admin
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/login:
+    post:
+      tags:
+        - Authentication
+      summary: login
+      description: Use this endpoint to login users.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: sophie@example.com
+                password: '{{password}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/forgotPassword:
+    post:
+      tags:
+        - Authentication
+      summary: forgot Password
+      description: >-
+        This endpoint is for generating reset token when the user forgets
+        password.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: ndirangucornelius@gmail.com
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/resetPassword/badda822e13a970e45c3c8ab230e4441fcb73c942295bca01a321008d8222f67:
+    patch:
+      tags:
+        - Authentication
+      summary: reset Password
+      description: >-
+        This endpoint is for reseting password after the reset token is
+        generated.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                password: reset123
+                passwordConfirm: reset123
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/users/updateMyPassword:
+    patch:
+      tags:
+        - Authentication
+      summary: update my password
+      description: Used for updating password, the current password must be provided first.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                passwordCurrent: update12
+                password: update123
+                passwordConfirm: update123
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/reviews:
+    get:
+      tags:
+        - Reviews
+      summary: Get All reviews
+      description: This endpoint is for getting all reviews.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Reviews
+      summary: Create review
+      description: >-
+        This endpoint is for creating a review on a tour. Only users are allowed
+        to create a review.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                review: Amazing
+                rating: 4.5
+                tour: 5c88fa8cf4afda39709c2951
+                user: 69a54f1d9a22b83b975c8167
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/reviews/69a7fe47c79016a0e347d6ad:
+    get:
+      tags:
+        - Reviews
+      summary: Get a review
+      description: This endpoint is for getting a review, using a reviewId.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/reviews/69aec9c4ea0891bc5a17070b:
+    delete:
+      tags:
+        - Reviews
+      summary: Delete Review
+      description: >-
+        Use this endpoint to delete a review using reviewId. User and admin can
+        delete a review.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/reviews/69af0a6a0af5e60d2208f27a:
+    patch:
+      tags:
+        - Reviews
+      summary: Update a review
+      description: >-
+        Use this endpoint to update a review, a user and admin can use update
+        it.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                rating: 5
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/69ae9fa21ee59c958a4c1a6c/reviews:
+    post:
+      tags:
+        - Tour/review
+      summary: Create new review on tour
+      description: This endpoint is used for creating a review on a tour.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                rating: 4.8
+                review: Superb
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1/tours/5c88fa8cf4afda39709c2961/reviews:
+    get:
+      tags:
+        - Tour/review
+      summary: Get all the reviews on a Tour
+      description: >-
+        This endpoint is used to get all the reviews on a tour. It is also
+        nested to tours router.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
