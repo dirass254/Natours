@@ -7,6 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const tourRouter = require('./routes/tourRouter');
 const userRouter = require('./routes/userRouter');
@@ -96,6 +97,8 @@ app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // cookie parser reading data from cookie
 app.use(cookieParser());
+// Compressing the response bodies for all requests that traverse through this middleware
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestedTime = new Date().toISOString();

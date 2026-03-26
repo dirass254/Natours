@@ -12,7 +12,7 @@ export const updateSettings = async (data, type) => {
       url,
       data,
     });
-    console.log(res.data);
+    //
     if (res.data.status === 'success') {
       showAlert('success', 'Data updated successfully!');
     }

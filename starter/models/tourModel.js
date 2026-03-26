@@ -187,11 +187,6 @@ tourSchema.pre(/^find/, function (next) {
 //   console.log('Will save document...');
 // });
 
-// eslint-disable-next-line prefer-arrow-callback
-tourSchema.post('save', function (doc) {
-  //console.log(doc);
-});
-
 // Query middleware: runs before .find() and .findOne()
 
 // we can use regex to apply this middleware to all query that starts with find (find, findOne, findById, etc.)
