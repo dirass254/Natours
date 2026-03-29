@@ -167,11 +167,11 @@ tourSchema.pre('save', function (next) {
   // Use slugify for robust slug generation
   this.slug = slugify(this.name, { lower: true });
   // For demonstration, log each step
-  console.log('Original:', this.name);
-  console.log('Lowercase:', lower);
-  console.log('Hyphenated:', hyphenated);
-  console.log('Cleaned:', cleaned);
-  console.log('Slugify:', this.slug);
+  // console.log('Original:', this.name);
+  // console.log('Lowercase:', lower);
+  // console.log('Hyphenated:', hyphenated);
+  // console.log('Cleaned:', cleaned);
+  // console.log('Slugify:', this.slug);
   //next();
 });
 
