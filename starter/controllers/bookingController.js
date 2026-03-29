@@ -16,7 +16,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     payment_method_types: ['card'],
     // this was used for testing, but we will use the webhook to create the booking after the payment is successful, so we will not use the success_url and cancel_url anymore. Instead, we will pass the tour information in the client_reference_id and then use it in the webhook to create the booking.
     // success_url: `${req.protocol}://${req.get('host')}/?tour=${tour.id}&user=${req.user.id}&price=${tour.price}`,
-    success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+    success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     customer_email: req.user.email,
     client_reference_id: req.params.tourId,
